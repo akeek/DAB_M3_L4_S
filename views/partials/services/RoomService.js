@@ -1,4 +1,4 @@
-const { sequelize } = require("../models");
+const { sequelize } = require("../../../models");
 
 class RoomService {
     constructor(db) {

@@ -3,7 +3,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var crypto = require('crypto');
 var db = require("../models");
-var UserService = require("../services/UserService")
+var UserService = require("../views/partials/services/UserService");
 var userService = new UserService(db);
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
@@ -34,9 +34,12 @@ passport.deserializeUser(function(user, cb) {
 });
 
 var router = express.Router();
+
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  const username = req.user?.username;
+  res.render('login', { username });
 });
+
 router.post('/login/password', passport.authenticate('local', {
   successReturnToOrRedirect: '/',
   failureRedirect: '/login',
